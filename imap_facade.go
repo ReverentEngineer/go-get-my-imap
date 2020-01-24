@@ -67,9 +67,8 @@ func (r *IMAPFacade) GetMessages(mailbox string) (<-chan *imap.Message, <-chan e
   seqset := new(imap.SeqSet)
   seqset.AddRange(from, to)
 
-  //var section imap.BodySectionName
-  //items := []imap.FetchItem{section.FetchItem(), imap.FetchEnvelope, imap.FetchUid}
-  items := []imap.FetchItem{imap.FetchEnvelope, imap.FetchUid}
+  var section imap.BodySectionName
+  items := []imap.FetchItem{section.FetchItem(), imap.FetchEnvelope, imap.FetchUid}
   go func() {
     done <- (*r.client).Fetch(seqset, items, messages)
   }()
